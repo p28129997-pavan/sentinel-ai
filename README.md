@@ -206,6 +206,26 @@ This repository includes a Render Blueprint in [`render.yaml`](./render.yaml). T
 
 The free web service uses ephemeral storage. The SQLite database is recreated and demo data is loaded when needed, so app data and analyst decisions can be lost when the service restarts or redeploys. Use a persistent disk on a supported plan if this demo needs durable state.
 
+### 6. Deploy the Vercel dashboard
+Vercel serves the Vercel-native static dashboard in `public/`; it is separate from the Streamlit interface above. The dashboard uses the repository's synthetic telemetry snapshot, performs URL checks in the browser, and stores analyst decisions in that browser's local storage. It does not provide shared or durable analyst records.
+
+1. Export a fresh snapshot after changing the sample data or detection engine:
+   ```bash
+   python scripts/export_vercel_demo.py
+   ```
+2. Push the repository to GitHub and import it as a project in Vercel.
+3. Keep the project root at the repository root. `vercel.json` sets the static output directory to `public`.
+4. Deploy, then use the public `*.vercel.app` URL Vercel assigns.
+
+This static deployment does not run the Streamlit server, Isolation Forest analytics, or SQLite workflow. Use Render (or another persistent Python web host) for the full Streamlit experience and shared server-side state.
+
+### Access the Streamlit app on your local network
+To allow other devices on the same network to connect to the Streamlit host, bind it to all network interfaces:
+```bash
+python -m streamlit run app.py --server.address 0.0.0.0 --server.port 8501
+```
+Then open `http://<host's-LAN-IP>:8501` from a device on that network and allow inbound TCP port 8501 in the host firewall if prompted. Addresses beginning with `10.`, including `10.10.112.161`, are private and are not reachable from the public internet. Use the public Vercel or Render URL for access from outside that network.
+
 ---
 
 ## 8. Walkthrough of Live Demonstration
