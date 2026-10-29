@@ -1,6 +1,20 @@
+import json
+import tomllib
+from pathlib import Path
+
 from fastapi.testclient import TestClient
 
 from api import server
+
+
+def test_vercel_config_enables_fastapi_framework_entrypoint():
+    root = Path(__file__).resolve().parents[1]
+    config = json.loads((root / "vercel.json").read_text(encoding="utf-8"))
+    project = tomllib.loads((root / "pyproject.toml").read_text(encoding="utf-8"))
+
+    assert config["framework"] == "fastapi"
+    assert config["functions"]["api/server.py"]["maxDuration"] == 60
+    assert project["tool"]["vercel"]["entrypoint"] == "api.server:app"
 
 
 def test_vercel_entrypoint_exports_fastapi_app():

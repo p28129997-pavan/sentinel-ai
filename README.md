@@ -213,7 +213,7 @@ For admin access and durable review decisions:
 
 1. Connect a Postgres database to the Vercel project. Add its connection string as `POSTGRES_URL` (or `DATABASE_URL`) in the project's environment variables.
 2. Set `ADMIN_PASSWORD` to a unique password of at least 16 characters, and `SESSION_SECRET` to a random secret of at least 32 characters. Keep both values in Vercel's environment settings—never commit them or paste them into source code.
-3. In Vercel **Project Settings → Build and Deployment**, select **FastAPI** as the Framework Preset, set the Root Directory to the repository root, and clear any Output Directory override such as `public`. A static-only Output Directory causes `/api/*` to return 404.
+3. Keep the Root Directory set to the repository root and clear any Vercel dashboard Output Directory override such as `public`. `vercel.json` explicitly selects the FastAPI framework preset; a static-only Output Directory causes `/api/*` to return 404.
 4. Push the repository to GitHub and deploy the latest commit. `pyproject.toml` selects `api.server:app`; the `api/server.py` function setting in `vercel.json` configures its maximum duration.
 5. Verify the deployment directly: `https://<your-project>.vercel.app/api/health` should return JSON with `"status":"online"`, and `/api/docs` should display the API docs. Then open the Vercel URL and use **Approval center** to sign in.
 
