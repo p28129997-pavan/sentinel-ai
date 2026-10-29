@@ -3,8 +3,8 @@ from fastapi.testclient import TestClient
 from api import server
 
 
-def test_root_vercel_entrypoint_exports_fastapi_app():
-    from server import app as vercel_app
+def test_vercel_entrypoint_exports_fastapi_app():
+    from api.server import app as vercel_app
 
     assert vercel_app is server.app
 
