@@ -1,5 +1,7 @@
 # SENTINEL AI — AI vs AI Threat Detection Platform
 
+Sentinel AI detects AI-assisted phishing campaigns, correlates authentication, network, and email events, explains alerts with evidence, and simulates containment only after human approval.
+
 SENTINEL AI is an enterprise-grade defensive cybersecurity threat detection platform designed to identify, correlate, and contain sophisticated, multi-stage attack campaigns. By fusing telemetry from three core enterprise vectors—**Email Gateway logs**, **Identity/Authentication logs**, and **Network Flow logs**—SENTINEL AI reconstructs complete adversary kill chains while minimizing alert fatigue and eliminating false positives.
 
 > **SAFE SIMULATION NOTICE**: SENTINEL AI operates with a strict response simulation framework. All automated recommendations (session revocation, host isolation, indicator blocklisting) are mock-executed within an isolated SQLite audit sandbox. Zero changes are made to live directories, endpoints, or perimeter firewalls.
