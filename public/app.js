@@ -1,5 +1,3 @@
-const DATA_URL = "/data/dashboard.json";
-const DECISIONS_KEY = "sentinel-ai-demo-decisions";
 const viewTitles = {
   overview: "SOC Overview",
   campaigns: "Threat Campaigns",
@@ -13,6 +11,7 @@ const title = document.querySelector("#page-title");
 const errorBox = document.querySelector("#load-error");
 let dashboard;
 let currentView = "overview";
+let adminSession = { configured: false, authenticated: false };
 
 function element(tag, className, text) {
   const node = document.createElement(tag);
@@ -21,19 +20,23 @@ function element(tag, className, text) {
   return node;
 }
 
-function decisions() {
+async function apiRequest(path, options = {}) {
+  const headers = new Headers(options.headers || {});
+  if (options.body) headers.set("Content-Type", "application/json");
+  const response = await fetch(path, {
+    ...options,
+    headers,
+    credentials: "same-origin",
+    cache: "no-store",
+  });
+  let result;
   try {
-    const stored = JSON.parse(localStorage.getItem(DECISIONS_KEY) || "{}");
-    return stored && typeof stored === "object" && !Array.isArray(stored) ? stored : {};
+    result = await response.json();
   } catch {
-    return {};
+    throw new Error(`Backend returned an invalid response (HTTP ${response.status}).`);
   }
-}
-
-function saveDecision(actionId, value) {
-  const current = decisions();
-  current[actionId] = value;
-  localStorage.setItem(DECISIONS_KEY, JSON.stringify(current));
+  if (!response.ok) throw new Error(result.detail || `Request failed (HTTP ${response.status}).`);
+  return result;
 }
 
 function incidentCard(incident) {
@@ -99,14 +102,13 @@ function renderSources(parent) {
 
 function renderOverview() {
   const metrics = dashboard.metrics || {};
-  const pending = dashboard.incidents.flatMap((incident) => incident.recommended_actions || [])
-    .filter((action) => !decisions()[action.action_id]).length;
+  const pending = dashboard.incidents.flatMap((incident) => incident.recommended_actions || []).length;
   const grid = element("div", "metrics-grid");
   grid.append(
     metric("Telemetry events", dashboard.events.length, "Email, identity and network"),
     metric("Correlated incidents", dashboard.incidents.length, "Detected from sample scenario", "amber"),
     metric("Critical / high", dashboard.incidents.filter((item) => ["CRITICAL", "HIGH"].includes(item.severity)).length, "Prioritized for analyst review", "red"),
-    metric("Pending reviews", pending, "Simulated actions only", "blue"),
+    metric("Response actions", pending, "Available in admin approval center", "blue"),
   );
   root.append(grid);
 
@@ -225,78 +227,9 @@ function renderTelemetry() {
   updateTable();
 }
 
-const suspiciousTlds = [".xyz", ".top", ".buzz", ".live", ".fit", ".ru", ".cc", ".tk", ".ml", ".ga", ".cf", ".gq", ".work", ".click", ".icu", ".link", ".online", ".site", ".pw"];
-const phishingKeywords = ["login", "signin", "verify", "credential", "account", "update", "banking", "secure", "wallet", "reset", "password", "billing", "invoice", "bonus", "auth", "token", "support", "helpdesk", "renewal", "payroll"];
-const spoofPatterns = [
-  ["paypa1", "PayPal lookalike"], ["micros0ft", "Microsoft lookalike"], ["goog1e", "Google lookalike"],
-  ["app1e", "Apple lookalike"], ["amaz0n", "Amazon lookalike"], ["netf1ix", "Netflix lookalike"],
-  ["0kta", "Okta lookalike"], ["c0rp", "Corporate lookalike"],
-];
-
-function inspectUrl(value) {
-  let url = value.trim();
-  if (!url) return { url, risk_score: 0, verdict: "BENIGN / SAFE", findings: ["Enter a URL to inspect."] };
-  if (!/^https?:\/\//i.test(url)) url = `http://${url}`;
-  let parsed;
-  try {
-    parsed = new URL(url);
-  } catch {
-    return { url, risk_score: 50, verdict: "SUSPICIOUS", findings: ["Malformed URL syntax"] };
-  }
-  const hostname = parsed.hostname.toLowerCase();
-  const full = url.toLowerCase();
-  const findings = [];
-  let score = 0;
-  if (/^(?:\d{1,3}\.){3}\d{1,3}$/.test(hostname)) {
-    findings.push(`Host uses raw numeric IP address instead of domain: ${hostname}`);
-    score += 35;
-  }
-  const tld = suspiciousTlds.find((item) => hostname.endsWith(item));
-  if (tld) {
-    findings.push(`High-risk untrusted top-level domain: ${tld}`);
-    score += 30;
-  }
-  spoofPatterns.forEach(([pattern, description]) => {
-    if (hostname.includes(pattern)) {
-      findings.push(`Typosquatting/brand spoofing detected: ${description} ('${pattern}')`);
-      score += 40;
-    }
-  });
-  const matches = phishingKeywords.filter((keyword) => full.includes(keyword));
-  if (matches.length) {
-    findings.push(`Social engineering / credential harvesting keywords: ${matches.slice(0, 4).join(", ")}`);
-    score += Math.min(matches.length * 15, 35);
-  }
-  if (url.toLowerCase().startsWith("http://")) {
-    findings.push("Insecure plain HTTP protocol (lacks TLS encryption)");
-    score += 10;
-  }
-  if (parsed.port && !["80", "443"].includes(parsed.port)) {
-    findings.push(`Non-standard web port in URL: :${parsed.port}`);
-    score += 25;
-  }
-  if (url.includes("@")) {
-    findings.push("URL contains '@' symbol (user-info obfuscation technique)");
-    score += 35;
-  }
-  if ((hostname.match(/\./g) || []).length >= 4) {
-    findings.push(`Excessive subdomain depth (${(hostname.match(/\./g) || []).length} levels)`);
-    score += 15;
-  }
-  score = Math.min(100, score);
-  return {
-    url: value,
-    normalized_url: url,
-    hostname,
-    risk_score: score,
-    verdict: score >= 70 ? "MALICIOUS / PHISHING" : score >= 35 ? "SUSPICIOUS" : "BENIGN / SAFE",
-    findings,
-  };
-}
-
 function renderInspector() {
   const panel = element("section", "panel");
-  panelHeading(panel, "Inspect a URL", "Heuristic checks run locally in your browser; the URL is not sent to a server.");
+  panelHeading(panel, "Inspect a URL", "The Python detection API analyzes this URL using Sentinel's phishing heuristics.");
   const form = element("form", "form-row");
   const input = element("input", "field");
   input.type = "text";
@@ -318,7 +251,7 @@ function renderInspector() {
     button.type = "button";
     button.addEventListener("click", () => {
       input.value = value;
-      showResult(inspectUrl(value));
+      inspect(value);
     });
     presets.append(button);
   });
@@ -327,11 +260,22 @@ function renderInspector() {
   panel.append(result);
   form.addEventListener("submit", (event) => {
     event.preventDefault();
-    showResult(inspectUrl(input.value));
+    inspect(input.value);
   });
 
-  function showResult(analysis) {
+  async function inspect(value) {
     result.replaceChildren();
+    result.append(element("p", "subtle", "Sending URL to the Sentinel Python API…"));
+    let analysis;
+    try {
+      analysis = await apiRequest("/api/inspect", {
+        method: "POST",
+        body: JSON.stringify({ url: value }),
+      });
+    } catch (error) {
+      result.replaceChildren(element("div", "notice error", error.message));
+      return;
+    }
     const heading = element("div", "incident-top");
     heading.append(
       element("h3", "", analysis.verdict),
@@ -347,81 +291,270 @@ function renderInspector() {
     result.append(heading, scoreTrack, target, findings);
   }
   root.append(panel);
+
+  const emailPanel = element("section", "panel");
+  emailPanel.style.marginTop = "14px";
+  panelHeading(emailPanel, "Inspect a suspicious email", "Evaluate sender, subject, authentication results, attachments, and links against the server-side email rules.");
+  const emailForm = element("form");
+  const emailGrid = element("div", "content-grid");
+  emailGrid.style.gridTemplateColumns = "repeat(2, minmax(0, 1fr))";
+  const emailInputs = {};
+  for (const [name, label, multiline] of [
+    ["sender", "Sender address", false],
+    ["subject", "Subject", false],
+    ["urls", "Links (one per line)", true],
+    ["attachments", "Attachments (one per line)", true],
+  ]) {
+    const fieldContainer = element("label", "field-group");
+    fieldContainer.append(element("span", "metric-label", label));
+    const input = element(multiline ? "textarea" : "input", "field");
+    input.name = name;
+    input.setAttribute("aria-label", label);
+    if (multiline) {
+      input.rows = 3;
+      input.style.resize = "vertical";
+    } else {
+      input.type = "text";
+    }
+    emailInputs[name] = input;
+    fieldContainer.append(input);
+    emailGrid.append(fieldContainer);
+  }
+  const authControls = element("div", "toolbar");
+  const authInputs = {};
+  for (const protocol of ["spf_status", "dkim_status", "dmarc_status"]) {
+    const label = protocol.replace("_status", "").toUpperCase();
+    const fieldContainer = element("label", "field-group");
+    fieldContainer.append(element("span", "metric-label", label));
+    const select = element("select", "select-field");
+    select.setAttribute("aria-label", label);
+    for (const value of ["Not provided", "PASS", "FAIL", "SOFTFAIL"]) {
+      const option = element("option", "", value);
+      option.value = value === "Not provided" ? "" : value;
+      select.append(option);
+    }
+    authInputs[protocol] = select;
+    fieldContainer.append(select);
+    authControls.append(fieldContainer);
+  }
+  const submitEmail = element("button", "primary-button", "Analyze email");
+  submitEmail.type = "submit";
+  const emailResult = element("div", "scan-result");
+  emailForm.append(emailGrid, authControls, submitEmail, emailResult);
+  emailPanel.append(emailForm);
+  emailForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    submitEmail.disabled = true;
+    emailResult.replaceChildren(element("p", "subtle", "Running email rules on the Python API…"));
+    try {
+      const analysis = await apiRequest("/api/inspect/email", {
+        method: "POST",
+        body: JSON.stringify({
+          sender: emailInputs.sender.value,
+          subject: emailInputs.subject.value,
+          urls: emailInputs.urls.value.split(/\r?\n/).map((value) => value.trim()).filter(Boolean),
+          attachments: emailInputs.attachments.value.split(/\r?\n/).map((value) => value.trim()).filter(Boolean),
+          spf_status: authInputs.spf_status.value,
+          dkim_status: authInputs.dkim_status.value,
+          dmarc_status: authInputs.dmarc_status.value,
+        }),
+      });
+      emailResult.replaceChildren();
+      const heading = element("div", "incident-top");
+      heading.append(
+        element("h3", "", analysis.verdict),
+        element("span", "risk", `Risk ${analysis.risk_score}/100`),
+      );
+      const findings = element("ul", "findings");
+      if (analysis.findings.length) {
+        analysis.findings.forEach((finding) => {
+          findings.append(element("li", "", `${finding.rule_name}: ${finding.evidence}`));
+        });
+      } else {
+        findings.append(element("li", "", "No configured email phishing rules matched."));
+      }
+      emailResult.append(heading, findings, element("p", "subtle", analysis.disclaimer));
+    } catch (error) {
+      emailResult.replaceChildren(element("div", "notice error", error.message));
+    } finally {
+      submitEmail.disabled = false;
+    }
+  });
+  root.append(emailPanel);
 }
 
 function renderApprovals() {
-  const prior = decisions();
-  const actions = dashboard.incidents.flatMap((incident) =>
-    (incident.recommended_actions || []).map((action) => ({ action, incident })),
-  );
-  const pending = actions.filter(({ action }) => !prior[action.action_id]);
-  const history = actions.filter(({ action }) => prior[action.action_id]);
-  root.append(element("p", "panel-subtitle", "All actions below are simulated. Decisions are kept in this browser only and are not shared with other users."));
+  root.append(element("p", "panel-subtitle", "Admin sign-in is required. Decisions are recorded in the configured Postgres database; approved actions remain simulations."));
+  const panel = element("section", "panel");
+  panelHeading(panel, "Admin access", "Sign in with the password configured for this Vercel deployment.");
+  root.append(panel);
+  apiRequest("/api/admin/session")
+    .then((session) => {
+      adminSession = session;
+      if (currentView !== "approvals") return;
+      if (!session.configured) {
+        panel.append(element("div", "notice error", "Admin access is not configured. Set ADMIN_PASSWORD and SESSION_SECRET in Vercel project settings, then redeploy."));
+        return;
+      }
+      if (session.authenticated) {
+        loadAdminApprovals(panel);
+      } else {
+        renderAdminLogin(panel);
+      }
+    })
+    .catch((error) => panel.append(element("div", "notice error", error.message)));
+}
+
+function renderAdminLogin(panel) {
+  const form = element("form", "form-row");
+  const password = element("input", "field");
+  password.type = "password";
+  password.autocomplete = "current-password";
+  password.placeholder = "Admin password";
+  password.required = true;
+  password.setAttribute("aria-label", "Admin password");
+  const submit = element("button", "primary-button", "Sign in");
+  submit.type = "submit";
+  const feedback = element("div");
+  form.append(password, submit);
+  panel.append(form, feedback);
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    submit.disabled = true;
+    feedback.replaceChildren();
+    try {
+      await apiRequest("/api/admin/login", {
+        method: "POST",
+        body: JSON.stringify({ password: password.value }),
+      });
+      adminSession.authenticated = true;
+      password.value = "";
+      await loadAdminApprovals(panel);
+    } catch (error) {
+      feedback.append(element("div", "notice error", error.message));
+    } finally {
+      submit.disabled = false;
+    }
+  });
+}
+
+async function loadAdminApprovals(panel) {
+  panel.replaceChildren();
+  panelHeading(panel, "Admin approval queue", "Actions are simulated and have no real-world effect.");
+  const loading = element("p", "subtle", "Loading decisions from the backend…");
+  panel.append(loading);
+  try {
+    const data = await apiRequest("/api/admin/approvals");
+    if (currentView !== "approvals") return;
+    panel.replaceChildren();
+    const header = element("div", "panel-heading");
+    const titleBlock = element("div");
+    titleBlock.append(element("h2", "", "Admin approval queue"));
+    titleBlock.append(element("p", "panel-subtitle", "Review records are shared and persisted in Postgres."));
+    const logout = element("button", "secondary-button", "Sign out");
+    logout.addEventListener("click", async () => {
+      try {
+        await apiRequest("/api/admin/logout", { method: "POST" });
+        adminSession.authenticated = false;
+        render();
+      } catch (error) {
+        panel.prepend(element("div", "notice error", error.message));
+      }
+    });
+    header.append(titleBlock, logout);
+    panel.append(header);
+    renderAdminActions(panel, adminActions);
+  } catch (error) {
+    loading.replaceWith(element("div", "notice error", error.message));
+  }
+}
+
+function renderAdminActions(panel, actions) {
+  const pending = actions.filter((action) => !action.review);
+  const history = actions.filter((action) => action.review);
   const pendingHeading = element("div", "section-heading");
   pendingHeading.append(element("h2", "", `Pending actions (${pending.length})`));
-  root.append(pendingHeading);
-  const pendingList = element("div", "approval-list");
-  if (!pending.length) pendingList.append(element("div", "empty-state", "No pending demo actions. Clear this browser's site data to reset the local review history."));
-  pending.forEach(({ action, incident }) => {
+  panel.append(pendingHeading);
+  const list = element("div", "approval-list");
+  if (!pending.length) list.append(element("div", "empty-state", "No pending actions."));
+  pending.forEach((action) => {
     const card = element("article", "approval-card");
     const top = element("div", "incident-top");
-    top.append(element("h3", "", action.action_type || "SIMULATED_ACTION"), element("span", "severity severity-high", "PENDING REVIEW"));
+    top.append(
+      element("h3", "", action.action_type),
+      element("span", "severity severity-high", "PENDING REVIEW"),
+    );
     card.append(top);
-    card.append(element("p", "incident-meta", `Target: ${action.target_entity || "—"} · Incident: ${incident.incident_id}`));
-    if (action.description) card.append(element("p", "incident-description", action.description));
+    card.append(element("p", "incident-meta", `Target: ${action.target_entity} · ${action.campaign_tag || action.incident_id}`));
+    card.append(element("p", "incident-description", action.description || ""));
     const controls = element("div", "action-row");
-    controls.style.justifyContent = "flex-start";
     const reviewer = element("input", "field");
     reviewer.value = "SOC Analyst";
     reviewer.setAttribute("aria-label", "Reviewer name");
     const notes = element("input", "field");
     notes.placeholder = "Decision notes (optional)";
     notes.setAttribute("aria-label", "Decision notes");
-    const approve = element("button", "decision-button", "Approve (simulate)");
-    const reject = element("button", "decision-button reject", "Reject");
-    approve.addEventListener("click", () => record(action, incident, "APPROVE", reviewer.value, notes.value));
-    reject.addEventListener("click", () => record(action, incident, "REJECT", reviewer.value, notes.value));
-    controls.append(reviewer, notes, approve, reject);
+    for (const decision of ["APPROVE", "REJECT"]) {
+      const button = element(
+        "button",
+        decision === "APPROVE" ? "decision-button" : "decision-button reject",
+        decision === "APPROVE" ? "Approve (simulate)" : "Reject",
+      );
+      button.addEventListener("click", async () => {
+        if (decision === "APPROVE" && !window.confirm(
+          `Approve simulated ${action.action_type} for ${action.target_entity}? No real-world action will occur.`,
+        )) return;
+        button.disabled = true;
+        try {
+          await apiRequest("/api/admin/decisions", {
+            method: "POST",
+            body: JSON.stringify({
+              action_id: action.action_id,
+              decision,
+              reviewer_name: reviewer.value.trim() || "SOC Analyst",
+              reviewer_notes: notes.value.trim(),
+            }),
+          });
+          await loadAdminApprovals(panel);
+        } catch (error) {
+          panel.prepend(element("div", "notice error", error.message));
+          button.disabled = false;
+        }
+      });
+      controls.append(button);
+    }
+    controls.prepend(reviewer, notes);
     card.append(controls);
-    pendingList.append(card);
+    list.append(card);
   });
-  root.append(pendingList);
+  panel.append(list);
 
   if (history.length) {
     const heading = element("div", "section-heading");
-    heading.append(element("h2", "", `This browser's review history (${history.length})`));
-    root.append(heading);
+    heading.append(element("h2", "", `Decision history (${history.length})`));
+    panel.append(heading);
     const historyList = element("div", "approval-list");
-    history.forEach(({ action, incident }) => {
-      const item = prior[action.action_id];
+    history.forEach((action) => {
       const card = element("article", "approval-card");
+      const top = element("div", "incident-top");
+      top.append(element("h3", "", action.action_type), element("span", "tag", action.review.decision));
       card.append(
-        element("div", "incident-top"),
+        top,
+        element("p", "incident-meta", `${action.target_entity} · ${action.campaign_tag || action.incident_id} · ${action.review.reviewer_name}`),
+        element("p", "incident-description", action.review.reviewer_notes || "No reviewer note."),
       );
-      const top = card.lastChild;
-      top.append(element("h3", "", action.action_type || "SIMULATED_ACTION"), element("span", "tag", item.decision));
-      card.append(element("p", "incident-meta", `${action.target_entity || "—"} · ${incident.incident_id} · ${item.reviewer || "SOC Analyst"}`));
-      card.append(element("p", "incident-description", item.note || "No reviewer note."));
+      if (action.review.execution_log) {
+        const detail = element("details");
+        detail.style.marginTop = "10px";
+        detail.append(element("summary", "text-button", "View simulated execution log"));
+        const log = element("pre", "subtle", JSON.stringify(action.review.execution_log, null, 2));
+        detail.append(log);
+        card.append(detail);
+      }
       historyList.append(card);
     });
-    root.append(historyList);
+    panel.append(historyList);
   }
-}
-
-function record(action, incident, decision, reviewer, note) {
-  const confirmed = decision === "REJECT" || window.confirm(
-    `Approve simulated ${action.action_type} for ${action.target_entity || "this target"}? No real-world action will occur.`,
-  );
-  if (!confirmed) return;
-  saveDecision(action.action_id, {
-    decision,
-    reviewer: reviewer.trim() || "SOC Analyst",
-    note: note.trim(),
-    incident_id: incident.incident_id,
-    decided_at: new Date().toISOString(),
-    simulation: true,
-  });
-  render();
 }
 
 function render() {
@@ -437,16 +570,19 @@ function render() {
 
 async function loadDashboard() {
   errorBox.hidden = true;
+  const backendStatus = document.querySelector("#backend-status");
+  backendStatus.lastChild.textContent = " API CONNECTING";
   try {
-    const response = await fetch(DATA_URL, { cache: "no-store" });
-    if (!response.ok) throw new Error(`Could not load demo data (HTTP ${response.status}).`);
-    dashboard = await response.json();
+    const health = await apiRequest("/api/health");
+    backendStatus.lastChild.textContent = health.status === "online" ? " PYTHON API ONLINE" : " API UNAVAILABLE";
+    dashboard = await apiRequest("/api/detections");
     if (!Array.isArray(dashboard.events) || !Array.isArray(dashboard.incidents)) {
-      throw new Error("The demo data file has an invalid format.");
+      throw new Error("The detection API returned an invalid response.");
     }
     render();
   } catch (error) {
-    errorBox.textContent = `${error.message} Check that public/data/dashboard.json exists and reload the page.`;
+    backendStatus.lastChild.textContent = " API UNAVAILABLE";
+    errorBox.textContent = `${error.message} Confirm the Vercel Python function is deployed and check the deployment logs.`;
     errorBox.hidden = false;
   }
 }
@@ -458,5 +594,11 @@ document.querySelectorAll(".nav-link").forEach((button) => {
     render();
   });
 });
-document.querySelector("#refresh-button").addEventListener("click", loadDashboard);
+document.querySelector("#refresh-button").addEventListener("click", async () => {
+  await loadDashboard();
+  if (currentView === "approvals" && adminSession.authenticated) {
+    const panel = root.querySelector(".panel");
+    if (panel) await loadAdminApprovals(panel);
+  }
+});
 loadDashboard();
