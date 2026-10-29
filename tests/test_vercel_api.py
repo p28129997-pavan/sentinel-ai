@@ -3,6 +3,12 @@ from fastapi.testclient import TestClient
 from api import server
 
 
+def test_root_vercel_entrypoint_exports_fastapi_app():
+    from server import app as vercel_app
+
+    assert vercel_app is server.app
+
+
 def configure_admin(monkeypatch):
     monkeypatch.setenv("ADMIN_PASSWORD", "a-very-long-test-password")
     monkeypatch.setenv("SESSION_SECRET", "test-session-secret-with-at-least-32-bytes")

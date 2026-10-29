@@ -207,14 +207,15 @@ This repository includes a Render Blueprint in [`render.yaml`](./render.yaml). T
 The free web service uses ephemeral storage. The SQLite database is recreated and demo data is loaded when needed, so app data and analyst decisions can be lost when the service restarts or redeploys. Use a persistent disk on a supported plan if this demo needs durable state.
 
 ### 6. Deploy the Vercel dashboard
-The Vercel deployment serves the dashboard from `public/` and runs the Python FastAPI backend in `api/server.py`. The dashboard requests detection results from `/api/detections`; URL and email phishing inspections run through `/api/inspect` and `/api/inspect/email` in the Python detection engine. The pipeline analyzes the included synthetic email, authentication, and network samples on each request. It does not ingest live organizational telemetry.
+The Vercel deployment serves the dashboard from `public/` and runs the Python FastAPI backend via the root `server.py` entrypoint (implementation: `api/server.py`). The dashboard requests detection results from `/api/detections`; URL and email phishing inspections run through `/api/inspect` and `/api/inspect/email` in the Python detection engine. The pipeline analyzes the included synthetic email, authentication, and network samples on each request. It does not ingest live organizational telemetry.
 
 For admin access and durable review decisions:
 
 1. Connect a Postgres database to the Vercel project. Add its connection string as `POSTGRES_URL` (or `DATABASE_URL`) in the project's environment variables.
 2. Set `ADMIN_PASSWORD` to a unique password of at least 16 characters, and `SESSION_SECRET` to a random secret of at least 32 characters. Keep both values in Vercel's environment settings—never commit them or paste them into source code.
-3. Push the repository to GitHub and import it as a Vercel project. Keep the project root at the repository root; `pyproject.toml` selects the FastAPI entrypoint and `vercel.json` serves the dashboard from `public/`.
-4. Deploy, open the Vercel URL, and use **Approval center** to sign in as the admin.
+3. In Vercel **Project Settings → Build and Deployment**, select **FastAPI** as the Framework Preset, set the Root Directory to the repository root, and clear any Output Directory override such as `public`. A static-only Output Directory causes `/api/*` to return 404.
+4. Push the repository to GitHub and deploy the latest commit. `pyproject.toml` selects root `server.py` as the FastAPI entrypoint; `vercel.json` configures the function duration.
+5. Verify the deployment directly: `https://<your-project>.vercel.app/api/health` should return JSON with `"status":"online"`, and `/api/docs` should display the API docs. Then open the Vercel URL and use **Approval center** to sign in.
 
 The backend exposes `/api/health` and `/api/docs` for health and API inspection. Admin sessions use an HttpOnly, SameSite cookie. Approve/reject decisions and simulated execution logs are persisted in Postgres and visible to all admins. A Postgres database and the admin environment variables must be configured before this workflow can save decisions.
 
