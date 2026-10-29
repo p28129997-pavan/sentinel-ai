@@ -196,6 +196,16 @@ python -m streamlit run app.py
 ```
 Open your browser to: **`http://localhost:8501`**
 
+### 5. Deploy to Render
+This repository includes a Render Blueprint in [`render.yaml`](./render.yaml). To deploy:
+
+1. Push the repository to GitHub.
+2. In Render, create a **Blueprint** and connect the repository.
+3. Review and apply the `sentinel-ai` web service.
+4. Open the `onrender.com` URL Render provides after the service becomes healthy.
+
+The free web service uses ephemeral storage. The SQLite database is recreated and demo data is loaded when needed, so app data and analyst decisions can be lost when the service restarts or redeploys. Use a persistent disk on a supported plan if this demo needs durable state.
+
 ---
 
 ## 8. Walkthrough of Live Demonstration
