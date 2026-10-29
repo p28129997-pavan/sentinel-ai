@@ -1,0 +1,50 @@
+{
+  "description": "Ground truth labels for evaluating Sentinel AI detection engine against simulated security events.",
+  "campaigns": [
+    {
+      "id": "CAMPAIGN_ALPHA",
+      "name": "Financial Phishing & C2 Exfiltration",
+      "expected_outcome": "CORRELATED_INCIDENT",
+      "expected_severity": "CRITICAL",
+      "primary_user": "sarah.finance",
+      "device_id": "FIN-WKS-042",
+      "indicator_ip": "198.51.100.45",
+      "stages": ["EMAIL_PHISHING", "BURST_AUTH_FAILURE_AND_SUCCESS", "HIGH_VOLUME_C2_EXFILTRATION"],
+      "event_ids": ["EML-1001", "AUTH-2001", "AUTH-2002", "AUTH-2003", "AUTH-2004", "NET-3001"],
+      "description": "Phishing email induces credential theft followed by brute-force/burst login and 142MB data exfiltration to port 4444."
+    },
+    {
+      "id": "CAMPAIGN_BRAVO",
+      "name": "IT Helpdesk Impersonation & C2 Beaconing",
+      "expected_outcome": "CORRELATED_INCIDENT",
+      "expected_severity": "HIGH",
+      "primary_user": "marcus.dev",
+      "device_id": "DEV-LPT-109",
+      "indicator_ip": "203.0.113.88",
+      "stages": ["EMAIL_PHISHING", "IMPOSSIBLE_TRAVEL_MFA_FATIGUE", "PERIODIC_C2_BEACONING"],
+      "event_ids": ["EML-1003", "AUTH-2006", "AUTH-2007", "AUTH-2008", "NET-3002", "NET-3003", "NET-3004"],
+      "description": "Fake IT VPN email leads to impossible travel from RU, MFA fatigue bypass, and periodic network beaconing."
+    },
+    {
+      "id": "CAMPAIGN_CHARLIE",
+      "name": "Executive Weaponized Macro & Privilege Escalation",
+      "expected_outcome": "CORRELATED_INCIDENT",
+      "expected_severity": "CRITICAL",
+      "primary_user": "elena.exec",
+      "device_id": "EXEC-WKS-001",
+      "indicator_ip": "198.51.100.199",
+      "stages": ["WEAPONIZED_ATTACHMENT", "SERVICE_ACCOUNT_ELEVATION", "HIGH_VOLUME_C2_EXFILTRATION"],
+      "event_ids": ["EML-1004", "AUTH-2009", "NET-3005"],
+      "description": "Weaponized spreadsheet leads to unauthorized service account elevation and 85MB outbound data transfer."
+    }
+  ],
+  "benign_events": [
+    "AUTH-2000",
+    "EML-1002", "EML-1005", "EML-1007",
+    "AUTH-2005", "AUTH-2010", "AUTH-2011", "AUTH-2012",
+    "NET-3006", "NET-3007", "NET-3008"
+  ],
+  "isolated_unmatched_events": [
+    "EML-1006"
+  ]
+}

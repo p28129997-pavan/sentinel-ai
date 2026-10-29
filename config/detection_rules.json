@@ -1,0 +1,112 @@
+{
+  "system": {
+    "name": "SENTINEL AI",
+    "version": "1.0.0",
+    "environment": "SIMULATION_MODE",
+    "correlation_window_minutes": 60,
+    "max_allowed_incident_age_hours": 24
+  },
+  "rules": {
+    "email": [
+      {
+        "id": "RULE_EMAIL_PHISHING_KEYWORD",
+        "name": "Phishing or Social Engineering Indicators",
+        "description": "Email subject or content matches known high-risk social engineering keywords.",
+        "severity": "MEDIUM",
+        "base_weight": 25,
+        "keywords": [
+          "urgent", "action required", "wire transfer", "verify account",
+          "credentials", "invoice overdue", "payroll update", "suspension",
+          "reset your password", "security alert", "vpn certificate", "bonus matrix"
+        ]
+      },
+      {
+        "id": "RULE_EMAIL_SUSPICIOUS_SENDER_DOMAIN",
+        "name": "Suspicious Sender Domain or Auth Failure",
+        "description": "Sender domain is suspicious, lookalike, or failed SPF/DKIM/DMARC validation.",
+        "severity": "HIGH",
+        "base_weight": 35,
+        "suspicious_tlds": [".xyz", ".top", ".buzz", ".live", ".fit", ".ru", ".cc"],
+        "suspicious_domains": ["paypa1-security.com", "auth-portal-update.net", "corp-secure-login.xyz", "it-support-desk.top"]
+      },
+      {
+        "id": "RULE_EMAIL_MALICIOUS_ATTACHMENT",
+        "name": "High-Risk Weaponized Attachment",
+        "description": "Email contains executable, script, or macro-enabled document attachment.",
+        "severity": "HIGH",
+        "base_weight": 40,
+        "risky_extensions": [".exe", ".scr", ".vbs", ".ps1", ".xlsm", ".docm", ".iso", ".bat", ".zip"]
+      }
+    ],
+    "auth": [
+      {
+        "id": "RULE_AUTH_FAILED_BURST",
+        "name": "Repeated Failed Login Attempts (Brute Force / Password Spray)",
+        "description": "Multiple authentication failures detected within a short time window.",
+        "severity": "HIGH",
+        "base_weight": 35,
+        "threshold_count": 3,
+        "window_minutes": 15
+      },
+      {
+        "id": "RULE_AUTH_IMPOSSIBLE_TRAVEL",
+        "name": "Impossible Travel or Unusual Geolocation",
+        "description": "Authentication event from geographically incongruent or high-risk source location.",
+        "severity": "HIGH",
+        "base_weight": 40
+      },
+      {
+        "id": "RULE_AUTH_MFA_FATIGUE_BYPASS",
+        "name": "MFA Fatigue / Repeated Push Denials Followed by Success",
+        "description": "Series of MFA push rejections immediately followed by a successful authentication.",
+        "severity": "CRITICAL",
+        "base_weight": 50
+      },
+      {
+        "id": "RULE_AUTH_PRIVILEGE_ESCALATION",
+        "name": "Privilege Escalation / Admin Account Abuse",
+        "description": "Privileged role or service account accessed unexpectedly or without change ticket.",
+        "severity": "HIGH",
+        "base_weight": 40,
+        "privileged_users": ["svc_backup", "domain_admin", "root", "it_admin", "secops_lead"]
+      }
+    ],
+    "network": [
+      {
+        "id": "RULE_NET_SUSPICIOUS_C2_PORT",
+        "name": "Outbound Connection to Known Malicious / C2 Port",
+        "description": "Outbound network traffic destined for common command-and-control ports.",
+        "severity": "HIGH",
+        "base_weight": 40,
+        "suspicious_ports": [4444, 8888, 1337, 6667, 9001, 8443, 31337]
+      },
+      {
+        "id": "RULE_NET_HIGH_VOLUME_EXFILTRATION",
+        "name": "Unusual High-Volume Outbound Data Transfer",
+        "description": "Significant volume of data exfiltrated to external destination in single session.",
+        "severity": "CRITICAL",
+        "base_weight": 45,
+        "threshold_bytes": 50000000
+      },
+      {
+        "id": "RULE_NET_BEACONING_PATTERN",
+        "name": "C2 Periodic Beaconing Pattern",
+        "description": "Regular interval connections with minimal payload to external IP/domain.",
+        "severity": "MEDIUM",
+        "base_weight": 30
+      }
+    ],
+    "correlation": {
+      "two_sources_multiplier": 1.25,
+      "three_sources_multiplier": 1.5,
+      "sequence_match_bonus": 20,
+      "unvalidated_evidence_penalty": 0.85
+    }
+  },
+  "risk_thresholds": {
+    "CRITICAL": 85,
+    "HIGH": 70,
+    "MEDIUM": 40,
+    "LOW": 0
+  }
+}
