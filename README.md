@@ -207,26 +207,17 @@ This repository includes a Render Blueprint in [`render.yaml`](./render.yaml). T
 The free web service uses ephemeral storage. The SQLite database is recreated and demo data is loaded when needed, so app data and analyst decisions can be lost when the service restarts or redeploys. Use a persistent disk on a supported plan if this demo needs durable state.
 
 ### 6. Deploy the Vercel dashboard
-The Vercel deployment serves the dashboard from `public/` and runs the Python FastAPI backend from `api/server.py`. The dashboard requests detection results from `/api/detections`; URL and email phishing inspections run through `/api/inspect` and `/api/inspect/email` in the Python detection engine. The pipeline analyzes the included synthetic email, authentication, and network samples on each request. It does not ingest live organizational telemetry.
+Vercel serves the Vercel-native static dashboard in `public/`; it is separate from the Streamlit interface above. The dashboard uses the repository's synthetic telemetry snapshot, performs URL checks in the browser, and stores analyst decisions in that browser's local storage. It does not provide shared or durable analyst records.
 
-For admin access and durable review decisions:
+1. Export a fresh snapshot after changing the sample data or detection engine:
+   ```bash
+   python scripts/export_vercel_demo.py
+   ```
+2. Push the repository to GitHub and import it as a project in Vercel.
+3. Keep the project root at the repository root. `vercel.json` sets the static output directory to `public`.
+4. Deploy, then use the public `*.vercel.app` URL Vercel assigns.
 
-1. Connect a Postgres database to the Vercel project. Add its connection string as `POSTGRES_URL` (or `DATABASE_URL`) in the project's environment variables.
-2. Set `ADMIN_PASSWORD` to a unique password of at least 16 characters, and `SESSION_SECRET` to a random secret of at least 32 characters. Keep both values in Vercel's environment settings—never commit them or paste them into source code.
-3. Keep the Root Directory set to the repository root and clear any Vercel dashboard Output Directory override such as `public`. `vercel.json` explicitly selects the FastAPI framework preset; a static-only Output Directory causes `/api/*` to return 404.
-4. Push the repository to GitHub and deploy the latest commit. `pyproject.toml` selects `api.server:app`; the `api/server.py` function setting in `vercel.json` configures its maximum duration.
-5. Verify the deployment directly: `https://<your-project>.vercel.app/api/health` should return JSON with `"status":"online"`, and `/api/docs` should display the API docs. Then open the Vercel URL and use **Approval center** to sign in.
-
-The backend exposes `/api/health` and `/api/docs` for health and API inspection. Admin sessions use an HttpOnly, SameSite cookie. Approve/reject decisions and simulated execution logs are persisted in Postgres and visible to all admins. A Postgres database and the admin environment variables must be configured before this workflow can save decisions.
-
-All response actions are simulations; no production account, device, or firewall is modified. For a live SOC product, connect authenticated telemetry sources and configure Vercel's deployment protections/rate limits. The existing Streamlit app remains the full local/Render dashboard.
-
-Run the Vercel dashboard and API together locally with:
-```bash
-python -m pip install -r requirements.txt
-python -m uvicorn api.server:app --reload
-```
-Open `http://127.0.0.1:8000`. Admin decisions remain unavailable until the local `POSTGRES_URL`, `ADMIN_PASSWORD`, and `SESSION_SECRET` environment variables are configured.
+This static deployment does not run the Streamlit server, Isolation Forest analytics, or SQLite workflow. Use Render (or another persistent Python web host) for the full Streamlit experience and shared server-side state.
 
 ### Access the Streamlit app on your local network
 To allow other devices on the same network to connect to the Streamlit host, bind it to all network interfaces:

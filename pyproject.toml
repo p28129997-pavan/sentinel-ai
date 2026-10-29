@@ -1,5 +1,0 @@
-[tool.vercel]
-entrypoint = "api.server:app"
-
-[tool.vercel.fastapi.static]
-exclude = true

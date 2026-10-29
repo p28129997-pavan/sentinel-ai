@@ -1,10 +1,4 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "fastapi",
   "cleanUrls": true,
-  "functions": {
-    "api/server.py": {
-      "maxDuration": 60
-    }
-  }
+  "outputDirectory": "public"
 }

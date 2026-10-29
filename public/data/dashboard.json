@@ -1,0 +1,832 @@
+{
+  "generated_at": "2026-10-29T01:25:03.831974+00:00",
+  "events": [
+    {
+      "event_id": "EML-1006",
+      "source": "EMAIL",
+      "timestamp": "2026-10-26T14:00:00Z",
+      "user_id": "bob.engineer",
+      "device_id": null,
+      "ip_address": null,
+      "scenario_tag": "ISOLATED_SUSPICIOUS_OUTSIDE_WINDOW",
+      "summary": "Email from offers@cheap-discounts-online.xyz - 'Unclaimed Gift Voucher - Limited Time Offer'"
+    },
+    {
+      "event_id": "NET-3008",
+      "source": "NETWORK",
+      "timestamp": "2026-10-28T07:10:00Z",
+      "user_id": "system",
+      "device_id": "SRV-DB-01",
+      "ip_address": "10.10.2.20",
+      "scenario_tag": "BENIGN",
+      "summary": "Outbound flow 10.10.1.10 -> 10.10.2.20:445"
+    },
+    {
+      "event_id": "EML-1005",
+      "source": "EMAIL",
+      "timestamp": "2026-10-28T08:30:00Z",
+      "user_id": "alice.hr",
+      "device_id": null,
+      "ip_address": "10.0.1.50",
+      "scenario_tag": "BENIGN",
+      "summary": "Email from hr-announcements@corp.local - 'Company All-Hands Meeting Notes & Slides'"
+    },
+    {
+      "event_id": "AUTH-2000",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T08:30:00Z",
+      "user_id": "elena.exec",
+      "device_id": "EXEC-WKS-001",
+      "ip_address": "10.0.5.21",
+      "scenario_tag": "BENIGN",
+      "summary": "Auth SUCCESS for elena.exec from 10.0.5.21"
+    },
+    {
+      "event_id": "AUTH-2010",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T08:45:00Z",
+      "user_id": "alice.hr",
+      "device_id": "HR-WKS-005",
+      "ip_address": "10.0.1.50",
+      "scenario_tag": "BENIGN",
+      "summary": "Auth SUCCESS for alice.hr from 10.0.1.50"
+    },
+    {
+      "event_id": "NET-3006",
+      "source": "NETWORK",
+      "timestamp": "2026-10-28T08:50:00Z",
+      "user_id": "alice.hr",
+      "device_id": "HR-WKS-005",
+      "ip_address": "192.0.2.200",
+      "scenario_tag": "BENIGN",
+      "summary": "Outbound flow 10.0.1.50 -> 192.0.2.200:443"
+    },
+    {
+      "event_id": "AUTH-2011",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T09:00:15Z",
+      "user_id": "bob.engineer",
+      "device_id": "ENG-LPT-202",
+      "ip_address": "10.0.2.88",
+      "scenario_tag": "BENIGN",
+      "summary": "Auth FAILURE for bob.engineer from 10.0.2.88"
+    },
+    {
+      "event_id": "AUTH-2012",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T09:01:00Z",
+      "user_id": "bob.engineer",
+      "device_id": "ENG-LPT-202",
+      "ip_address": "10.0.2.88",
+      "scenario_tag": "BENIGN",
+      "summary": "Auth SUCCESS for bob.engineer from 10.0.2.88"
+    },
+    {
+      "event_id": "EML-1002",
+      "source": "EMAIL",
+      "timestamp": "2026-10-28T09:15:00Z",
+      "user_id": "sarah.finance",
+      "device_id": null,
+      "ip_address": "192.0.2.14",
+      "scenario_tag": "BENIGN",
+      "summary": "Email from newsletter@industry-tech-insights.com - 'Weekly Tech & Market Digest - Oct Edition'"
+    },
+    {
+      "event_id": "NET-3007",
+      "source": "NETWORK",
+      "timestamp": "2026-10-28T09:20:00Z",
+      "user_id": "bob.engineer",
+      "device_id": "ENG-LPT-202",
+      "ip_address": "192.0.2.110",
+      "scenario_tag": "BENIGN",
+      "summary": "Outbound flow 10.0.2.88 -> 192.0.2.110:443"
+    },
+    {
+      "event_id": "EML-1007",
+      "source": "EMAIL",
+      "timestamp": "2026-10-28T09:45:10Z",
+      "user_id": "bob.engineer",
+      "device_id": null,
+      "ip_address": "10.0.2.88",
+      "scenario_tag": "BENIGN",
+      "summary": "Email from colleague@corp.local - 'Pull Request #412 Code Review comments'"
+    },
+    {
+      "event_id": "EML-1001",
+      "source": "EMAIL",
+      "timestamp": "2026-10-28T10:05:12Z",
+      "user_id": "sarah.finance",
+      "device_id": null,
+      "ip_address": "198.51.100.45",
+      "scenario_tag": "CAMPAIGN_ALPHA",
+      "summary": "Email from billing@invoice-secure-portal.xyz - 'Urgent: Invoice Overdue - Action Required Immediately'"
+    },
+    {
+      "event_id": "AUTH-2001",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T10:14:02Z",
+      "user_id": "sarah.finance",
+      "device_id": "FIN-WKS-042",
+      "ip_address": "198.51.100.45",
+      "scenario_tag": "CAMPAIGN_ALPHA",
+      "summary": "Auth FAILURE for sarah.finance from 198.51.100.45"
+    },
+    {
+      "event_id": "AUTH-2002",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T10:15:10Z",
+      "user_id": "sarah.finance",
+      "device_id": "FIN-WKS-042",
+      "ip_address": "198.51.100.45",
+      "scenario_tag": "CAMPAIGN_ALPHA",
+      "summary": "Auth FAILURE for sarah.finance from 198.51.100.45"
+    },
+    {
+      "event_id": "AUTH-2003",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T10:16:30Z",
+      "user_id": "sarah.finance",
+      "device_id": "FIN-WKS-042",
+      "ip_address": "198.51.100.45",
+      "scenario_tag": "CAMPAIGN_ALPHA",
+      "summary": "Auth FAILURE for sarah.finance from 198.51.100.45"
+    },
+    {
+      "event_id": "AUTH-2004",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T10:18:05Z",
+      "user_id": "sarah.finance",
+      "device_id": "FIN-WKS-042",
+      "ip_address": "198.51.100.45",
+      "scenario_tag": "CAMPAIGN_ALPHA",
+      "summary": "Auth SUCCESS for sarah.finance from 198.51.100.45"
+    },
+    {
+      "event_id": "NET-3001",
+      "source": "NETWORK",
+      "timestamp": "2026-10-28T10:27:44Z",
+      "user_id": "sarah.finance",
+      "device_id": "FIN-WKS-042",
+      "ip_address": "198.51.100.45",
+      "scenario_tag": "CAMPAIGN_ALPHA",
+      "summary": "Outbound flow 10.0.3.42 -> 198.51.100.45:4444"
+    },
+    {
+      "event_id": "AUTH-2005",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T11:05:00Z",
+      "user_id": "marcus.dev",
+      "device_id": "DEV-LPT-109",
+      "ip_address": "10.0.4.15",
+      "scenario_tag": "BENIGN",
+      "summary": "Auth SUCCESS for marcus.dev from 10.0.4.15"
+    },
+    {
+      "event_id": "EML-1003",
+      "source": "EMAIL",
+      "timestamp": "2026-10-28T11:10:05Z",
+      "user_id": "marcus.dev",
+      "device_id": null,
+      "ip_address": "203.0.113.88",
+      "scenario_tag": "CAMPAIGN_BRAVO",
+      "summary": "Email from support@it-support-desk.top - 'Action Required: VPN Certificate Update and Security Alert'"
+    },
+    {
+      "event_id": "AUTH-2006",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T11:22:15Z",
+      "user_id": "marcus.dev",
+      "device_id": "DEV-LPT-109",
+      "ip_address": "203.0.113.88",
+      "scenario_tag": "CAMPAIGN_BRAVO",
+      "summary": "Auth FAILURE for marcus.dev from 203.0.113.88"
+    },
+    {
+      "event_id": "AUTH-2007",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T11:23:05Z",
+      "user_id": "marcus.dev",
+      "device_id": "DEV-LPT-109",
+      "ip_address": "203.0.113.88",
+      "scenario_tag": "CAMPAIGN_BRAVO",
+      "summary": "Auth FAILURE for marcus.dev from 203.0.113.88"
+    },
+    {
+      "event_id": "AUTH-2008",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T11:24:00Z",
+      "user_id": "marcus.dev",
+      "device_id": "DEV-LPT-109",
+      "ip_address": "203.0.113.88",
+      "scenario_tag": "CAMPAIGN_BRAVO",
+      "summary": "Auth SUCCESS for marcus.dev from 203.0.113.88"
+    },
+    {
+      "event_id": "NET-3002",
+      "source": "NETWORK",
+      "timestamp": "2026-10-28T11:35:10Z",
+      "user_id": "marcus.dev",
+      "device_id": "DEV-LPT-109",
+      "ip_address": "203.0.113.88",
+      "scenario_tag": "CAMPAIGN_BRAVO",
+      "summary": "Outbound flow 10.0.4.15 -> 203.0.113.88:8888"
+    },
+    {
+      "event_id": "NET-3003",
+      "source": "NETWORK",
+      "timestamp": "2026-10-28T11:36:12Z",
+      "user_id": "marcus.dev",
+      "device_id": "DEV-LPT-109",
+      "ip_address": "203.0.113.88",
+      "scenario_tag": "CAMPAIGN_BRAVO",
+      "summary": "Outbound flow 10.0.4.15 -> 203.0.113.88:8888"
+    },
+    {
+      "event_id": "NET-3004",
+      "source": "NETWORK",
+      "timestamp": "2026-10-28T11:37:15Z",
+      "user_id": "marcus.dev",
+      "device_id": "DEV-LPT-109",
+      "ip_address": "203.0.113.88",
+      "scenario_tag": "CAMPAIGN_BRAVO",
+      "summary": "Outbound flow 10.0.4.15 -> 203.0.113.88:8888"
+    },
+    {
+      "event_id": "EML-1004",
+      "source": "EMAIL",
+      "timestamp": "2026-10-28T12:00:20Z",
+      "user_id": "elena.exec",
+      "device_id": null,
+      "ip_address": "198.51.100.199",
+      "scenario_tag": "CAMPAIGN_CHARLIE",
+      "summary": "Email from compensation@bonus-review-portal.net - 'Confidential: Q3 Executive Bonus Matrix & Allocation'"
+    },
+    {
+      "event_id": "AUTH-2009",
+      "source": "AUTH",
+      "timestamp": "2026-10-28T12:15:30Z",
+      "user_id": "svc_backup",
+      "device_id": "EXEC-WKS-001",
+      "ip_address": "10.0.5.21",
+      "scenario_tag": "CAMPAIGN_CHARLIE",
+      "summary": "Auth SUCCESS for svc_backup from 10.0.5.21"
+    },
+    {
+      "event_id": "NET-3005",
+      "source": "NETWORK",
+      "timestamp": "2026-10-28T12:28:40Z",
+      "user_id": null,
+      "device_id": "EXEC-WKS-001",
+      "ip_address": "198.51.100.199",
+      "scenario_tag": "CAMPAIGN_CHARLIE",
+      "summary": "Outbound flow 10.0.5.21 -> 198.51.100.199:8443"
+    }
+  ],
+  "incidents": [
+    {
+      "incident_id": "INC-02E53519",
+      "title": "Suspicious Activity Detected: Suspicious Sender Domain or Auth Failure",
+      "campaign_tag": "ISOLATED_SUSPICIOUS_OUTSIDE_WINDOW",
+      "status": "ACTIVE",
+      "severity": "MEDIUM",
+      "risk_score": 58.0,
+      "confidence": 0.41,
+      "detected_at": "2026-10-29T01:25:03.831974+00:00",
+      "primary_user": "bob.engineer",
+      "primary_device": null,
+      "primary_ip": null,
+      "rule_ids": [
+        "RULE_EMAIL_SUSPICIOUS_SENDER_DOMAIN",
+        "RULE_EMAIL_SUSPICIOUS_URL"
+      ],
+      "timeline": [
+        {
+          "timestamp": "2026-10-26T14:00:00Z",
+          "source": "EMAIL",
+          "stage": "INITIAL_ACCESS",
+          "event_id": "EML-1006",
+          "summary": "Email from offers@cheap-discounts-online.xyz - 'Unclaimed Gift Voucher - Limited Time Offer'"
+        }
+      ],
+      "explanation": {
+        "narrative_markdown": "### Incident Summary: Suspicious Activity Detected: Suspicious Sender Domain or Auth Failure\n\n**Risk Assessment**: `MEDIUM` Risk Score: **58.0/100** (Confidence: 41%)\n\n#### 1. Observed Security Facts\n- [2026-10-26T14:00:00Z] Email Gateway (EML-1006): Inbound email from 'offers@cheap-discounts-online.xyz' to 'bob.engineer' with subject 'Unclaimed Gift Voucher - Limited Time Offer' (SPF=FAIL).\n\n\n#### 2. Inferred Threat Relationships\n- Cross-Source Correlation: Identified temporal and entity causality connecting 1 discrete events across email, identity, and network telemetry.\n\n\n#### 3. Recommended Safe Containment Actions\n- **REVOKE_SESSION** on `bob.engineer`: Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'bob.engineer'.\n\n\n> **Simulation Notice**: SENTINEL AI operates in safe simulation mode. No live production endpoints or firewall policies will be modified. All containment actions require explicit SOC reviewer authorization.\n",
+        "observed_facts": [
+          "[2026-10-26T14:00:00Z] Email Gateway (EML-1006): Inbound email from 'offers@cheap-discounts-online.xyz' to 'bob.engineer' with subject 'Unclaimed Gift Voucher - Limited Time Offer' (SPF=FAIL)."
+        ],
+        "inferred_relationships": [
+          "Cross-Source Correlation: Identified temporal and entity causality connecting 1 discrete events across email, identity, and network telemetry."
+        ],
+        "recommended_actions": [
+          {
+            "action_id": "ACT-INC-02E5-01",
+            "action_type": "REVOKE_SESSION",
+            "target_entity": "bob.engineer",
+            "description": "Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'bob.engineer'.",
+            "risk_mitigation": "Immediately truncates attacker session persistence."
+          }
+        ]
+      },
+      "recommended_actions": [
+        {
+          "action_id": "ACT-INC-02E5-01",
+          "action_type": "REVOKE_SESSION",
+          "target_entity": "bob.engineer",
+          "description": "Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'bob.engineer'.",
+          "risk_mitigation": "Immediately truncates attacker session persistence."
+        }
+      ],
+      "correlated_events": [
+        {
+          "event_id": "EML-1006",
+          "source": "EMAIL",
+          "stage": "INITIAL_ACCESS",
+          "correlation_reason": "Delivery vector and social engineering lures"
+        }
+      ]
+    },
+    {
+      "incident_id": "INC-201C0649",
+      "title": "Multi-Stage Coordinated Campaign: Campaign Alpha",
+      "campaign_tag": "CAMPAIGN_ALPHA",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "risk_score": 100.0,
+      "confidence": 0.98,
+      "detected_at": "2026-10-29T01:25:03.832296+00:00",
+      "primary_user": "sarah.finance",
+      "primary_device": "FIN-WKS-042",
+      "primary_ip": "198.51.100.45",
+      "rule_ids": [
+        "RULE_EMAIL_PHISHING_KEYWORD",
+        "RULE_EMAIL_SUSPICIOUS_SENDER_DOMAIN",
+        "RULE_EMAIL_SUSPICIOUS_URL",
+        "RULE_AUTH_FAILED_BURST",
+        "RULE_NET_SUSPICIOUS_C2_PORT",
+        "RULE_NET_HIGH_VOLUME_EXFILTRATION"
+      ],
+      "timeline": [
+        {
+          "timestamp": "2026-10-28T10:05:12Z",
+          "source": "EMAIL",
+          "stage": "INITIAL_ACCESS",
+          "event_id": "EML-1001",
+          "summary": "Email from billing@invoice-secure-portal.xyz - 'Urgent: Invoice Overdue - Action Required Immediately'"
+        },
+        {
+          "timestamp": "2026-10-28T10:14:02Z",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "event_id": "AUTH-2001",
+          "summary": "Auth FAILURE for sarah.finance from 198.51.100.45"
+        },
+        {
+          "timestamp": "2026-10-28T10:15:10Z",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "event_id": "AUTH-2002",
+          "summary": "Auth FAILURE for sarah.finance from 198.51.100.45"
+        },
+        {
+          "timestamp": "2026-10-28T10:16:30Z",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "event_id": "AUTH-2003",
+          "summary": "Auth FAILURE for sarah.finance from 198.51.100.45"
+        },
+        {
+          "timestamp": "2026-10-28T10:18:05Z",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "event_id": "AUTH-2004",
+          "summary": "Auth SUCCESS for sarah.finance from 198.51.100.45"
+        },
+        {
+          "timestamp": "2026-10-28T10:27:44Z",
+          "source": "NETWORK",
+          "stage": "COMMAND_AND_CONTROL",
+          "event_id": "NET-3001",
+          "summary": "Outbound flow 10.0.3.42 -> 198.51.100.45:4444"
+        }
+      ],
+      "explanation": {
+        "narrative_markdown": "### Incident Summary: Multi-Stage Coordinated Campaign: Campaign Alpha\n\n**Risk Assessment**: `CRITICAL` Risk Score: **100.0/100** (Confidence: 98%)\n\n#### 1. Observed Security Facts\n- [2026-10-28T10:05:12Z] Email Gateway (EML-1001): Inbound email from 'billing@invoice-secure-portal.xyz' to 'sarah.finance' with subject 'Urgent: Invoice Overdue - Action Required Immediately' (SPF=FAIL).\n- [2026-10-28T10:14:02Z] Authentication (AUTH-2001): Auth attempt for user 'sarah.finance' from IP '198.51.100.45' (External Datacenter, US) - Status: FAILURE.\n- [2026-10-28T10:15:10Z] Authentication (AUTH-2002): Auth attempt for user 'sarah.finance' from IP '198.51.100.45' (External Datacenter, US) - Status: FAILURE.\n- [2026-10-28T10:16:30Z] Authentication (AUTH-2003): Auth attempt for user 'sarah.finance' from IP '198.51.100.45' (External Datacenter, US) - Status: FAILURE.\n- [2026-10-28T10:18:05Z] Authentication (AUTH-2004): Auth attempt for user 'sarah.finance' from IP '198.51.100.45' (External Datacenter, US) - Status: SUCCESS.\n- [2026-10-28T10:27:44Z] Network Flow (NET-3001): Outbound TCP traffic from device 'FIN-WKS-042' to '198.51.100.45:4444' (135.9 MB transferred).\n\n\n#### 2. Inferred Threat Relationships\n- Initial Access Vector: User 'sarah.finance' was targeted via social engineering or weaponized attachment.\n- Credential & Privilege Compromise: Suspicious authentication anomalies correlate directly with the preceding delivery vector on device 'FIN-WKS-042'.\n- Command-and-Control / Exfiltration: Compromised endpoint established persistent communication and/or exfiltrated corporate data to external infrastructure 198.51.100.45.\n- Cross-Source Correlation: Identified temporal and entity causality connecting 6 discrete events across email, identity, and network telemetry.\n\n\n#### 3. Recommended Safe Containment Actions\n- **REVOKE_SESSION** on `sarah.finance`: Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'sarah.finance'.\n- **ISOLATE_DEVICE** on `FIN-WKS-042`: Simulate host network isolation for endpoint 'FIN-WKS-042' via EDR agent.\n- **BLOCK_INDICATOR** on `198.51.100.45`: Simulate adding adversary IP '198.51.100.45' and associated domains to perimeter edge firewall blocklist.\n\n\n> **Simulation Notice**: SENTINEL AI operates in safe simulation mode. No live production endpoints or firewall policies will be modified. All containment actions require explicit SOC reviewer authorization.\n",
+        "observed_facts": [
+          "[2026-10-28T10:05:12Z] Email Gateway (EML-1001): Inbound email from 'billing@invoice-secure-portal.xyz' to 'sarah.finance' with subject 'Urgent: Invoice Overdue - Action Required Immediately' (SPF=FAIL).",
+          "[2026-10-28T10:14:02Z] Authentication (AUTH-2001): Auth attempt for user 'sarah.finance' from IP '198.51.100.45' (External Datacenter, US) - Status: FAILURE.",
+          "[2026-10-28T10:15:10Z] Authentication (AUTH-2002): Auth attempt for user 'sarah.finance' from IP '198.51.100.45' (External Datacenter, US) - Status: FAILURE.",
+          "[2026-10-28T10:16:30Z] Authentication (AUTH-2003): Auth attempt for user 'sarah.finance' from IP '198.51.100.45' (External Datacenter, US) - Status: FAILURE.",
+          "[2026-10-28T10:18:05Z] Authentication (AUTH-2004): Auth attempt for user 'sarah.finance' from IP '198.51.100.45' (External Datacenter, US) - Status: SUCCESS.",
+          "[2026-10-28T10:27:44Z] Network Flow (NET-3001): Outbound TCP traffic from device 'FIN-WKS-042' to '198.51.100.45:4444' (135.9 MB transferred)."
+        ],
+        "inferred_relationships": [
+          "Initial Access Vector: User 'sarah.finance' was targeted via social engineering or weaponized attachment.",
+          "Credential & Privilege Compromise: Suspicious authentication anomalies correlate directly with the preceding delivery vector on device 'FIN-WKS-042'.",
+          "Command-and-Control / Exfiltration: Compromised endpoint established persistent communication and/or exfiltrated corporate data to external infrastructure 198.51.100.45.",
+          "Cross-Source Correlation: Identified temporal and entity causality connecting 6 discrete events across email, identity, and network telemetry."
+        ],
+        "recommended_actions": [
+          {
+            "action_id": "ACT-INC-201C-01",
+            "action_type": "REVOKE_SESSION",
+            "target_entity": "sarah.finance",
+            "description": "Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'sarah.finance'.",
+            "risk_mitigation": "Immediately truncates attacker session persistence."
+          },
+          {
+            "action_id": "ACT-INC-201C-02",
+            "action_type": "ISOLATE_DEVICE",
+            "target_entity": "FIN-WKS-042",
+            "description": "Simulate host network isolation for endpoint 'FIN-WKS-042' via EDR agent.",
+            "risk_mitigation": "Halts lateral movement and ongoing data exfiltration while maintaining management telemetry."
+          },
+          {
+            "action_id": "ACT-INC-201C-03",
+            "action_type": "BLOCK_INDICATOR",
+            "target_entity": "198.51.100.45",
+            "description": "Simulate adding adversary IP '198.51.100.45' and associated domains to perimeter edge firewall blocklist.",
+            "risk_mitigation": "Denies egress C2 callback channels enterprise-wide."
+          }
+        ]
+      },
+      "recommended_actions": [
+        {
+          "action_id": "ACT-INC-201C-01",
+          "action_type": "REVOKE_SESSION",
+          "target_entity": "sarah.finance",
+          "description": "Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'sarah.finance'.",
+          "risk_mitigation": "Immediately truncates attacker session persistence."
+        },
+        {
+          "action_id": "ACT-INC-201C-02",
+          "action_type": "ISOLATE_DEVICE",
+          "target_entity": "FIN-WKS-042",
+          "description": "Simulate host network isolation for endpoint 'FIN-WKS-042' via EDR agent.",
+          "risk_mitigation": "Halts lateral movement and ongoing data exfiltration while maintaining management telemetry."
+        },
+        {
+          "action_id": "ACT-INC-201C-03",
+          "action_type": "BLOCK_INDICATOR",
+          "target_entity": "198.51.100.45",
+          "description": "Simulate adding adversary IP '198.51.100.45' and associated domains to perimeter edge firewall blocklist.",
+          "risk_mitigation": "Denies egress C2 callback channels enterprise-wide."
+        }
+      ],
+      "correlated_events": [
+        {
+          "event_id": "EML-1001",
+          "source": "EMAIL",
+          "stage": "INITIAL_ACCESS",
+          "correlation_reason": "Delivery vector and social engineering lures"
+        },
+        {
+          "event_id": "AUTH-2001",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "correlation_reason": "Authentication anomalies and identity exploitation"
+        },
+        {
+          "event_id": "AUTH-2002",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "correlation_reason": "Authentication anomalies and identity exploitation"
+        },
+        {
+          "event_id": "AUTH-2003",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "correlation_reason": "Authentication anomalies and identity exploitation"
+        },
+        {
+          "event_id": "AUTH-2004",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "correlation_reason": "Authentication anomalies and identity exploitation"
+        },
+        {
+          "event_id": "NET-3001",
+          "source": "NETWORK",
+          "stage": "COMMAND_AND_CONTROL",
+          "correlation_reason": "Outbound egress connection to adversary infrastructure"
+        }
+      ]
+    },
+    {
+      "incident_id": "INC-6B3293A5",
+      "title": "Multi-Stage Coordinated Campaign: Campaign Bravo",
+      "campaign_tag": "CAMPAIGN_BRAVO",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "risk_score": 100.0,
+      "confidence": 0.98,
+      "detected_at": "2026-10-29T01:25:03.832496+00:00",
+      "primary_user": "marcus.dev",
+      "primary_device": "DEV-LPT-109",
+      "primary_ip": "203.0.113.88",
+      "rule_ids": [
+        "RULE_EMAIL_PHISHING_KEYWORD",
+        "RULE_EMAIL_SUSPICIOUS_SENDER_DOMAIN",
+        "RULE_EMAIL_SUSPICIOUS_URL",
+        "RULE_AUTH_IMPOSSIBLE_TRAVEL",
+        "RULE_AUTH_MFA_FATIGUE_BYPASS",
+        "RULE_NET_SUSPICIOUS_C2_PORT",
+        "RULE_NET_BEACONING_PATTERN"
+      ],
+      "timeline": [
+        {
+          "timestamp": "2026-10-28T11:10:05Z",
+          "source": "EMAIL",
+          "stage": "INITIAL_ACCESS",
+          "event_id": "EML-1003",
+          "summary": "Email from support@it-support-desk.top - 'Action Required: VPN Certificate Update and Security Alert'"
+        },
+        {
+          "timestamp": "2026-10-28T11:22:15Z",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "event_id": "AUTH-2006",
+          "summary": "Auth FAILURE for marcus.dev from 203.0.113.88"
+        },
+        {
+          "timestamp": "2026-10-28T11:23:05Z",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "event_id": "AUTH-2007",
+          "summary": "Auth FAILURE for marcus.dev from 203.0.113.88"
+        },
+        {
+          "timestamp": "2026-10-28T11:24:00Z",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "event_id": "AUTH-2008",
+          "summary": "Auth SUCCESS for marcus.dev from 203.0.113.88"
+        },
+        {
+          "timestamp": "2026-10-28T11:35:10Z",
+          "source": "NETWORK",
+          "stage": "COMMAND_AND_CONTROL",
+          "event_id": "NET-3002",
+          "summary": "Outbound flow 10.0.4.15 -> 203.0.113.88:8888"
+        },
+        {
+          "timestamp": "2026-10-28T11:36:12Z",
+          "source": "NETWORK",
+          "stage": "COMMAND_AND_CONTROL",
+          "event_id": "NET-3003",
+          "summary": "Outbound flow 10.0.4.15 -> 203.0.113.88:8888"
+        },
+        {
+          "timestamp": "2026-10-28T11:37:15Z",
+          "source": "NETWORK",
+          "stage": "COMMAND_AND_CONTROL",
+          "event_id": "NET-3004",
+          "summary": "Outbound flow 10.0.4.15 -> 203.0.113.88:8888"
+        }
+      ],
+      "explanation": {
+        "narrative_markdown": "### Incident Summary: Multi-Stage Coordinated Campaign: Campaign Bravo\n\n**Risk Assessment**: `CRITICAL` Risk Score: **100.0/100** (Confidence: 98%)\n\n#### 1. Observed Security Facts\n- [2026-10-28T11:10:05Z] Email Gateway (EML-1003): Inbound email from 'support@it-support-desk.top' to 'marcus.dev' with subject 'Action Required: VPN Certificate Update and Security Alert' (SPF=FAIL).\n- [2026-10-28T11:22:15Z] Authentication (AUTH-2006): Auth attempt for user 'marcus.dev' from IP '203.0.113.88' (Moscow, RU) - Status: FAILURE.\n- [2026-10-28T11:23:05Z] Authentication (AUTH-2007): Auth attempt for user 'marcus.dev' from IP '203.0.113.88' (Moscow, RU) - Status: FAILURE.\n- [2026-10-28T11:24:00Z] Authentication (AUTH-2008): Auth attempt for user 'marcus.dev' from IP '203.0.113.88' (Moscow, RU) - Status: SUCCESS.\n- [2026-10-28T11:35:10Z] Network Flow (NET-3002): Outbound TCP traffic from device 'DEV-LPT-109' to '203.0.113.88:8888' (0.0 MB transferred).\n- [2026-10-28T11:36:12Z] Network Flow (NET-3003): Outbound TCP traffic from device 'DEV-LPT-109' to '203.0.113.88:8888' (0.0 MB transferred).\n- [2026-10-28T11:37:15Z] Network Flow (NET-3004): Outbound TCP traffic from device 'DEV-LPT-109' to '203.0.113.88:8888' (0.0 MB transferred).\n\n\n#### 2. Inferred Threat Relationships\n- Initial Access Vector: User 'marcus.dev' was targeted via social engineering or weaponized attachment.\n- Credential & Privilege Compromise: Suspicious authentication anomalies correlate directly with the preceding delivery vector on device 'DEV-LPT-109'.\n- Command-and-Control / Exfiltration: Compromised endpoint established persistent communication and/or exfiltrated corporate data to external infrastructure 203.0.113.88.\n- Cross-Source Correlation: Identified temporal and entity causality connecting 7 discrete events across email, identity, and network telemetry.\n\n\n#### 3. Recommended Safe Containment Actions\n- **REVOKE_SESSION** on `marcus.dev`: Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'marcus.dev'.\n- **ISOLATE_DEVICE** on `DEV-LPT-109`: Simulate host network isolation for endpoint 'DEV-LPT-109' via EDR agent.\n- **BLOCK_INDICATOR** on `203.0.113.88`: Simulate adding adversary IP '203.0.113.88' and associated domains to perimeter edge firewall blocklist.\n\n\n> **Simulation Notice**: SENTINEL AI operates in safe simulation mode. No live production endpoints or firewall policies will be modified. All containment actions require explicit SOC reviewer authorization.\n",
+        "observed_facts": [
+          "[2026-10-28T11:10:05Z] Email Gateway (EML-1003): Inbound email from 'support@it-support-desk.top' to 'marcus.dev' with subject 'Action Required: VPN Certificate Update and Security Alert' (SPF=FAIL).",
+          "[2026-10-28T11:22:15Z] Authentication (AUTH-2006): Auth attempt for user 'marcus.dev' from IP '203.0.113.88' (Moscow, RU) - Status: FAILURE.",
+          "[2026-10-28T11:23:05Z] Authentication (AUTH-2007): Auth attempt for user 'marcus.dev' from IP '203.0.113.88' (Moscow, RU) - Status: FAILURE.",
+          "[2026-10-28T11:24:00Z] Authentication (AUTH-2008): Auth attempt for user 'marcus.dev' from IP '203.0.113.88' (Moscow, RU) - Status: SUCCESS.",
+          "[2026-10-28T11:35:10Z] Network Flow (NET-3002): Outbound TCP traffic from device 'DEV-LPT-109' to '203.0.113.88:8888' (0.0 MB transferred).",
+          "[2026-10-28T11:36:12Z] Network Flow (NET-3003): Outbound TCP traffic from device 'DEV-LPT-109' to '203.0.113.88:8888' (0.0 MB transferred).",
+          "[2026-10-28T11:37:15Z] Network Flow (NET-3004): Outbound TCP traffic from device 'DEV-LPT-109' to '203.0.113.88:8888' (0.0 MB transferred)."
+        ],
+        "inferred_relationships": [
+          "Initial Access Vector: User 'marcus.dev' was targeted via social engineering or weaponized attachment.",
+          "Credential & Privilege Compromise: Suspicious authentication anomalies correlate directly with the preceding delivery vector on device 'DEV-LPT-109'.",
+          "Command-and-Control / Exfiltration: Compromised endpoint established persistent communication and/or exfiltrated corporate data to external infrastructure 203.0.113.88.",
+          "Cross-Source Correlation: Identified temporal and entity causality connecting 7 discrete events across email, identity, and network telemetry."
+        ],
+        "recommended_actions": [
+          {
+            "action_id": "ACT-INC-6B32-01",
+            "action_type": "REVOKE_SESSION",
+            "target_entity": "marcus.dev",
+            "description": "Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'marcus.dev'.",
+            "risk_mitigation": "Immediately truncates attacker session persistence."
+          },
+          {
+            "action_id": "ACT-INC-6B32-02",
+            "action_type": "ISOLATE_DEVICE",
+            "target_entity": "DEV-LPT-109",
+            "description": "Simulate host network isolation for endpoint 'DEV-LPT-109' via EDR agent.",
+            "risk_mitigation": "Halts lateral movement and ongoing data exfiltration while maintaining management telemetry."
+          },
+          {
+            "action_id": "ACT-INC-6B32-03",
+            "action_type": "BLOCK_INDICATOR",
+            "target_entity": "203.0.113.88",
+            "description": "Simulate adding adversary IP '203.0.113.88' and associated domains to perimeter edge firewall blocklist.",
+            "risk_mitigation": "Denies egress C2 callback channels enterprise-wide."
+          }
+        ]
+      },
+      "recommended_actions": [
+        {
+          "action_id": "ACT-INC-6B32-01",
+          "action_type": "REVOKE_SESSION",
+          "target_entity": "marcus.dev",
+          "description": "Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'marcus.dev'.",
+          "risk_mitigation": "Immediately truncates attacker session persistence."
+        },
+        {
+          "action_id": "ACT-INC-6B32-02",
+          "action_type": "ISOLATE_DEVICE",
+          "target_entity": "DEV-LPT-109",
+          "description": "Simulate host network isolation for endpoint 'DEV-LPT-109' via EDR agent.",
+          "risk_mitigation": "Halts lateral movement and ongoing data exfiltration while maintaining management telemetry."
+        },
+        {
+          "action_id": "ACT-INC-6B32-03",
+          "action_type": "BLOCK_INDICATOR",
+          "target_entity": "203.0.113.88",
+          "description": "Simulate adding adversary IP '203.0.113.88' and associated domains to perimeter edge firewall blocklist.",
+          "risk_mitigation": "Denies egress C2 callback channels enterprise-wide."
+        }
+      ],
+      "correlated_events": [
+        {
+          "event_id": "EML-1003",
+          "source": "EMAIL",
+          "stage": "INITIAL_ACCESS",
+          "correlation_reason": "Delivery vector and social engineering lures"
+        },
+        {
+          "event_id": "AUTH-2006",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "correlation_reason": "Authentication anomalies and identity exploitation"
+        },
+        {
+          "event_id": "AUTH-2007",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "correlation_reason": "Authentication anomalies and identity exploitation"
+        },
+        {
+          "event_id": "AUTH-2008",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "correlation_reason": "Authentication anomalies and identity exploitation"
+        },
+        {
+          "event_id": "NET-3002",
+          "source": "NETWORK",
+          "stage": "COMMAND_AND_CONTROL",
+          "correlation_reason": "Outbound egress connection to adversary infrastructure"
+        },
+        {
+          "event_id": "NET-3003",
+          "source": "NETWORK",
+          "stage": "COMMAND_AND_CONTROL",
+          "correlation_reason": "Outbound egress connection to adversary infrastructure"
+        },
+        {
+          "event_id": "NET-3004",
+          "source": "NETWORK",
+          "stage": "COMMAND_AND_CONTROL",
+          "correlation_reason": "Outbound egress connection to adversary infrastructure"
+        }
+      ]
+    },
+    {
+      "incident_id": "INC-A3CB9EAC",
+      "title": "Multi-Stage Coordinated Campaign: Campaign Charlie",
+      "campaign_tag": "CAMPAIGN_CHARLIE",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "risk_score": 100.0,
+      "confidence": 0.98,
+      "detected_at": "2026-10-29T01:25:03.832613+00:00",
+      "primary_user": "elena.exec",
+      "primary_device": "EXEC-WKS-001",
+      "primary_ip": "198.51.100.199",
+      "rule_ids": [
+        "RULE_EMAIL_PHISHING_KEYWORD",
+        "RULE_EMAIL_SUSPICIOUS_SENDER_DOMAIN",
+        "RULE_EMAIL_MALICIOUS_ATTACHMENT",
+        "RULE_AUTH_PRIVILEGE_ESCALATION",
+        "RULE_NET_SUSPICIOUS_C2_PORT",
+        "RULE_NET_HIGH_VOLUME_EXFILTRATION"
+      ],
+      "timeline": [
+        {
+          "timestamp": "2026-10-28T12:00:20Z",
+          "source": "EMAIL",
+          "stage": "INITIAL_ACCESS",
+          "event_id": "EML-1004",
+          "summary": "Email from compensation@bonus-review-portal.net - 'Confidential: Q3 Executive Bonus Matrix & Allocation'"
+        },
+        {
+          "timestamp": "2026-10-28T12:15:30Z",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "event_id": "AUTH-2009",
+          "summary": "Auth SUCCESS for svc_backup from 10.0.5.21"
+        },
+        {
+          "timestamp": "2026-10-28T12:28:40Z",
+          "source": "NETWORK",
+          "stage": "COMMAND_AND_CONTROL",
+          "event_id": "NET-3005",
+          "summary": "Outbound flow 10.0.5.21 -> 198.51.100.199:8443"
+        }
+      ],
+      "explanation": {
+        "narrative_markdown": "### Incident Summary: Multi-Stage Coordinated Campaign: Campaign Charlie\n\n**Risk Assessment**: `CRITICAL` Risk Score: **100.0/100** (Confidence: 98%)\n\n#### 1. Observed Security Facts\n- [2026-10-28T12:00:20Z] Email Gateway (EML-1004): Inbound email from 'compensation@bonus-review-portal.net' to 'elena.exec' with subject 'Confidential: Q3 Executive Bonus Matrix & Allocation' (SPF=SOFTFAIL).\n- [2026-10-28T12:15:30Z] Authentication (AUTH-2009): Auth attempt for user 'elena.exec' from IP '10.0.5.21' (New York, US) - Status: SUCCESS.\n- [2026-10-28T12:28:40Z] Network Flow (NET-3005): Outbound TCP traffic from device 'EXEC-WKS-001' to '198.51.100.199:8443' (81.25 MB transferred).\n\n\n#### 2. Inferred Threat Relationships\n- Initial Access Vector: User 'elena.exec' was targeted via social engineering or weaponized attachment.\n- Credential & Privilege Compromise: Suspicious authentication anomalies correlate directly with the preceding delivery vector on device 'EXEC-WKS-001'.\n- Command-and-Control / Exfiltration: Compromised endpoint established persistent communication and/or exfiltrated corporate data to external infrastructure 198.51.100.199.\n- Cross-Source Correlation: Identified temporal and entity causality connecting 3 discrete events across email, identity, and network telemetry.\n\n\n#### 3. Recommended Safe Containment Actions\n- **REVOKE_SESSION** on `elena.exec`: Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'elena.exec'.\n- **ISOLATE_DEVICE** on `EXEC-WKS-001`: Simulate host network isolation for endpoint 'EXEC-WKS-001' via EDR agent.\n- **BLOCK_INDICATOR** on `198.51.100.199`: Simulate adding adversary IP '198.51.100.199' and associated domains to perimeter edge firewall blocklist.\n\n\n> **Simulation Notice**: SENTINEL AI operates in safe simulation mode. No live production endpoints or firewall policies will be modified. All containment actions require explicit SOC reviewer authorization.\n",
+        "observed_facts": [
+          "[2026-10-28T12:00:20Z] Email Gateway (EML-1004): Inbound email from 'compensation@bonus-review-portal.net' to 'elena.exec' with subject 'Confidential: Q3 Executive Bonus Matrix & Allocation' (SPF=SOFTFAIL).",
+          "[2026-10-28T12:15:30Z] Authentication (AUTH-2009): Auth attempt for user 'elena.exec' from IP '10.0.5.21' (New York, US) - Status: SUCCESS.",
+          "[2026-10-28T12:28:40Z] Network Flow (NET-3005): Outbound TCP traffic from device 'EXEC-WKS-001' to '198.51.100.199:8443' (81.25 MB transferred)."
+        ],
+        "inferred_relationships": [
+          "Initial Access Vector: User 'elena.exec' was targeted via social engineering or weaponized attachment.",
+          "Credential & Privilege Compromise: Suspicious authentication anomalies correlate directly with the preceding delivery vector on device 'EXEC-WKS-001'.",
+          "Command-and-Control / Exfiltration: Compromised endpoint established persistent communication and/or exfiltrated corporate data to external infrastructure 198.51.100.199.",
+          "Cross-Source Correlation: Identified temporal and entity causality connecting 3 discrete events across email, identity, and network telemetry."
+        ],
+        "recommended_actions": [
+          {
+            "action_id": "ACT-INC-A3CB-01",
+            "action_type": "REVOKE_SESSION",
+            "target_entity": "elena.exec",
+            "description": "Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'elena.exec'.",
+            "risk_mitigation": "Immediately truncates attacker session persistence."
+          },
+          {
+            "action_id": "ACT-INC-A3CB-02",
+            "action_type": "ISOLATE_DEVICE",
+            "target_entity": "EXEC-WKS-001",
+            "description": "Simulate host network isolation for endpoint 'EXEC-WKS-001' via EDR agent.",
+            "risk_mitigation": "Halts lateral movement and ongoing data exfiltration while maintaining management telemetry."
+          },
+          {
+            "action_id": "ACT-INC-A3CB-03",
+            "action_type": "BLOCK_INDICATOR",
+            "target_entity": "198.51.100.199",
+            "description": "Simulate adding adversary IP '198.51.100.199' and associated domains to perimeter edge firewall blocklist.",
+            "risk_mitigation": "Denies egress C2 callback channels enterprise-wide."
+          }
+        ]
+      },
+      "recommended_actions": [
+        {
+          "action_id": "ACT-INC-A3CB-01",
+          "action_type": "REVOKE_SESSION",
+          "target_entity": "elena.exec",
+          "description": "Simulate revoking active IdP/SSO session tokens and enforce mandatory credential reset for user 'elena.exec'.",
+          "risk_mitigation": "Immediately truncates attacker session persistence."
+        },
+        {
+          "action_id": "ACT-INC-A3CB-02",
+          "action_type": "ISOLATE_DEVICE",
+          "target_entity": "EXEC-WKS-001",
+          "description": "Simulate host network isolation for endpoint 'EXEC-WKS-001' via EDR agent.",
+          "risk_mitigation": "Halts lateral movement and ongoing data exfiltration while maintaining management telemetry."
+        },
+        {
+          "action_id": "ACT-INC-A3CB-03",
+          "action_type": "BLOCK_INDICATOR",
+          "target_entity": "198.51.100.199",
+          "description": "Simulate adding adversary IP '198.51.100.199' and associated domains to perimeter edge firewall blocklist.",
+          "risk_mitigation": "Denies egress C2 callback channels enterprise-wide."
+        }
+      ],
+      "correlated_events": [
+        {
+          "event_id": "EML-1004",
+          "source": "EMAIL",
+          "stage": "INITIAL_ACCESS",
+          "correlation_reason": "Delivery vector and social engineering lures"
+        },
+        {
+          "event_id": "AUTH-2009",
+          "source": "AUTH",
+          "stage": "CREDENTIAL_ACCESS",
+          "correlation_reason": "Authentication anomalies and identity exploitation"
+        },
+        {
+          "event_id": "NET-3005",
+          "source": "NETWORK",
+          "stage": "COMMAND_AND_CONTROL",
+          "correlation_reason": "Outbound egress connection to adversary infrastructure"
+        }
+      ]
+    }
+  ],
+  "metrics": {
+    "campaigns_expected": 3,
+    "campaigns_detected": 3,
+    "campaigns_missed": 0,
+    "false_positive_campaigns": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1_score": 1.0,
+    "false_positive_rate": 0.0,
+    "benign_events_count": 11,
+    "benign_events_flagged_count": 0,
+    "disclaimer": "Benchmark calculated against synthetic validation scenario data. Performance on synthetic test sets does not guarantee identical performance on real-world networks."
+  }
+}
